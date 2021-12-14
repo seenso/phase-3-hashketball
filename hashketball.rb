@@ -162,7 +162,9 @@ end
 
 def team_names()
   #return arr of team names
-  [].push(game_hash[:home][:team_name], game_hash[:away][:team_name])
+  # [].push(game_hash.values[:team_name],game_hash[:away][:team_name])
+
+  game_hash.values.map {|team| team[:team_name]}
 end
 
 def player_numbers(teamName) 
