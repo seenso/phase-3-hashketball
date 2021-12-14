@@ -127,3 +127,101 @@ def game_hash
 end
 
 # Write code here
+#Build a method, num_points_scored that takes in an argument of a player's name and returns the number of points scored for that player.
+def num_points_scored(playerName)
+  # will need to iterate/enumerate through player arrays (both home and away) and return the :points property value
+  game_hash.values.each do |team|
+    team[:players].each do |player|
+      if player[:player_name] == playerName
+        return player[:points]
+      end
+    end
+  end
+end
+
+
+def shoe_size(playerName) 
+  #return playerName's shoe size
+  game_hash.values.each do |team|
+    team[:players].each do |player|
+      if player[:player_name] == playerName
+        return player[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(teamName) 
+  #return arr of team colors
+  if game_hash[:home][:team_name] == teamName
+    return game_hash[:home][:colors]
+  elsif game_hash[:away][:team_name] == teamName
+    return game_hash[:away][:colors]
+  end
+end
+
+def team_names()
+  #return arr of team names
+  [].push(game_hash[:home][:team_name], game_hash[:away][:team_name])
+end
+
+def player_numbers(teamName) 
+  #return arr of jersey numbers for teamName
+  jerseyNums = []
+
+  if game_hash[:home][:team_name] == teamName
+    game_hash[:home][:players].each do |player|
+      jerseyNums.push(player[:number])
+    end
+  elsif game_hash[:away][:team_name] == teamName
+    # return array of all jersey numbers of their players
+    game_hash[:away][:players].each do |player|
+      jerseyNums.push(player[:number])
+    end
+  end
+
+  jerseyNums
+end
+
+def player_stats(playerName) 
+  #return hash of player's stats
+  stats = {}
+
+  game_hash[:home][:players].select do |player|
+    if player[:player_name] == playerName
+      stats = player
+    end
+  end
+
+  game_hash[:away][:players].select do |player|
+    if player[:player_name] == playerName
+      stats = player
+    end
+  end
+
+  stats
+end
+
+def big_shoe_rebounds()
+  #return num of rebounds for playerName that has largest shoe size
+  #find player w larest shoe
+  biggestShoe = 0
+  bigFootPlayer = {}
+
+  game_hash[:home][:players].each do |player|
+    if player[:shoe] > biggestShoe
+      biggestShoe = player[:shoe]
+      bigFootPlayer = player
+    end
+  end
+
+  game_hash[:away][:players].each do |player|
+    if player[:shoe] > biggestShoe
+      biggestShoe = player[:shoe]
+      bigFootPlayer = player
+    end
+  end
+
+  #return player's number of rebounds
+  bigFootPlayer[:rebounds]
+end
